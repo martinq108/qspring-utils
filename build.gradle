@@ -1,11 +1,12 @@
 plugins {
     id "java-library"
     id "maven-publish"
+    id "signing"
     id "com.palantir.git-version" version "0.10.1"
     id "io.spring.dependency-management" version "1.0.4.RELEASE"
 }
 
-group "com.qapil"
+group "com.github.martinq108"
 version gitVersion()
 sourceCompatibility = 1.8
 
@@ -15,11 +16,124 @@ repositories {
     maven { url 'https://repo.spring.io/libs-milestone' }
 }
 
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            customizePom(pom)
+
             from components.java
+
+            // create the sign pom artifact
+            pom.withXml {
+                def pomFile = file("${project.buildDir}/generated-pom.xml")
+                writeTo(pomFile)
+                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
+                artifact(pomAscFile) {
+                    classifier = null
+                    extension = 'pom.asc'
+                }
+            }
+
+            artifact sourcesJar
+            artifact javadocJar
+
+            // create the signed artifacts
+            project.tasks.signArchives.signatureFiles.each {
+                artifact(it) {
+                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                    if (matcher.find()) {
+                        classifier = matcher.group(1)
+                    } else {
+                        classifier = null
+                    }
+                    extension = 'jar.asc'
+                }
+            }
         }
+    }
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+def customizePom(pom) {
+    pom.withXml {
+        def root = asNode()
+
+        // eliminate test-scoped dependencies (no need in maven central POMs)
+        root.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        // add all items necessary for maven central publication
+        root.children().last() + {
+            resolveStrategy = Closure.DELEGATE_FIRST
+
+            description 'Utility classes used for Spring framework'
+            name 'qspring-utils'
+            url 'https://github.com/martinq108/qspring-utils'
+            organization {
+                name 'com.github.martinq108'
+                url 'https://github.com/martinq108'
+            }
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/martinq108/qspring-utils/issues'
+            }
+            licenses {
+                license {
+                    name 'Apache License 2.0'
+                    url 'https://github.com/martinq108/qspring-utils/blob/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                url 'https://github.com/martinq108/qspring-utils.git'
+                connection 'scm:git:git://github.com/martinq108/qspring-utils.git'
+                developerConnection 'scm:git:ssh://git@github.com:martinq108/qspring-utils.git'
+            }
+            developers {
+                developer {
+                    name 'martinq'
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenJavaPublication {
+        destination = file("$buildDir/generated-pom.xml")
+    }
+    tasks.publishMavenJavaPublicationToMavenLocal {
+        dependsOn project.tasks.signArchives
+    }
+    tasks.publishMavenJavaPublicationToMavenRepository {
+        dependsOn project.tasks.signArchives
     }
 }
 
