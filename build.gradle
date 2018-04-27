@@ -17,6 +17,10 @@ repositories {
     maven { url 'https://repo.spring.io/libs-milestone' }
 }
 
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
