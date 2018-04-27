@@ -5,8 +5,9 @@ pipeline {
       steps {
         sh 'pwd'
         sh 'env'
+        sh 'ls -la'
         sh 'java -version'
-        sh 'gradle -version'
+        sh './gradlew -version'
       }
     }
   }
