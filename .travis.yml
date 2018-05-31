@@ -10,7 +10,6 @@ env:
 script:
   - echo $HOME
   - pwd
-  - ls -al
   - ./gradlew build -s -scan
 
 before_cache:
