@@ -8,6 +8,7 @@ pipeline:
     restore: true
     mount:
       - /drone/gradle
+      - /drone/qspring-utils/build
     volumes:
       - /tmp/cache:/cache
 
@@ -45,5 +46,6 @@ pipeline:
     rebuild: true
     mount:
       - /drone/gradle
+      - /drone/qspring-utils/build
     volumes:
       - /tmp/cache:/cache
