@@ -1,0 +1,10 @@
+pipeline:
+  initialize:
+    image: martinq/gradle
+    commands:
+      - java -version
+
+  build:
+    image: martinq/gradle
+    commands:
+      - ./gradlew dependencies -s
