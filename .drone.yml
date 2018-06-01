@@ -15,6 +15,7 @@ pipeline:
   before_build:
     image: martinq/gradle
     commands:
+      - mkdir -p /drone/gradle
       - du -sh /drone/gradle
 
   build:
@@ -35,8 +36,8 @@ pipeline:
   before_cache:
     image: martinq/gradle
     commands:
-      - rm -f workspace/gradle/caches/modules-2/modules-2.lock
-      - rm -rf workspace/gradle/caches/*/plugin-resolution/
+      - rm -f /drone/gradle/caches/modules-2/modules-2.lock
+      - rm -rf /drone/gradle/caches/*/plugin-resolution/
 
   rebuild_cache:
     image: drillster/drone-volume-cache
