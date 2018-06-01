@@ -14,6 +14,8 @@ pipeline:
   initialize:
     image: martinq/gradle
     commands:
+      - echo ${signing_keyid}
+      - echo ${SIGNING_KEYID}
       - env
       - du -sh /workspace/gradle
       - java -version
