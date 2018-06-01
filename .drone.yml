@@ -23,7 +23,6 @@ pipeline:
     environment:
       - GRADLE_USER_HOME=/workspace/gradle
     commands:
-      - echo $GRADLE_USER_HOME
       - pwd
       - ls -al ..
       - ./gradlew dependencies -s
