@@ -1,26 +1,36 @@
+workspace:
+  base: /workspace
+  path: qspring-utils
+
 pipeline:
   restore_cache:
     image: drillster/drone-volume-cache
     restore: true
     mount:
-      - ~/.gradle
+      - /workspace/gradle
     volumes:
       - /tmp/cache:/cache
 
   initialize:
     image: martinq/gradle
     commands:
+      - pwd
+      - ls -al ..
       - java -version
 
   build:
     image: martinq/gradle
+    environment:
+      - GRADLE_USER_HOME=/workspace/gradle
     commands:
+      - pwd
+      - ls -al ..
       - ./gradlew dependencies -s
 
   rebuild_cache:
     image: drillster/drone-volume-cache
     rebuild: true
     mount:
-      - ~/.gradle
+      - /workspace/gradle
     volumes:
       - /tmp/cache:/cache
