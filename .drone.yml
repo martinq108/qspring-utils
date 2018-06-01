@@ -11,7 +11,7 @@ pipeline:
     volumes:
       - /tmp/cache:/cache
 
-  initialize:
+  before_build:
     image: martinq/gradle
     commands:
       - java -version
