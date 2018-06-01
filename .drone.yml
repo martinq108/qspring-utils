@@ -3,6 +3,7 @@ pipeline:
     image: martinq/gradle
     commands:
       - java -version
+      - echo $HOME
 
   build:
     image: martinq/gradle
