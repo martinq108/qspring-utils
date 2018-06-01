@@ -15,18 +15,24 @@ pipeline:
     image: martinq/gradle
     commands:
       - java -version
+      - mkdir -p /drone/gradle
+      - du -sh /drone/gradle
+      - env
 
   build:
     image: martinq/gradle
     environment:
       - GRADLE_USER_HOME=/drone/gradle
-    commands:
-      - du -sh /drone/gradle
-      - ./gradlew assemble
-      - du -sh /drone/gradle
     secrets: 
       - SIGNING_KEYID
       - SIGNING_PASSWORD
+    commands:
+      - ./gradlew assemble
+
+  after_build:
+    image: martinq/gradle
+    commands:
+      - du -sh /drone/gradle
 
   before_cache:
     image: martinq/gradle
