@@ -15,8 +15,6 @@ pipeline:
   before_build:
     image: martinq/gradle
     commands:
-      - java -version
-      - mkdir -p /drone/gradle
       - du -sh /drone/gradle
 
   build:
