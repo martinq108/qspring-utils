@@ -14,28 +14,17 @@ pipeline:
   initialize:
     image: martinq/gradle
     commands:
-      - echo ${signing_keyid}
-      - echo ${SIGNING_KEYID}
-      - env
-      - du -sh /workspace/gradle
       - java -version
-    secrets: 
-      - signing_keyid
-      - signing_password
-      - SIGNING_KEYID
-      - SIGNING_PASSWORD
 
   build:
     image: martinq/gradle
     environment:
       - GRADLE_USER_HOME=/workspace/gradle
     commands:
-      - env
       - du -sh /workspace/gradle
       - ./gradlew assemble
+      - du -sh /workspace/gradle
     secrets: 
-      - signing_keyid
-      - signing_password
       - SIGNING_KEYID
       - SIGNING_PASSWORD
 
