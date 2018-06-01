@@ -18,7 +18,7 @@ pipeline:
       - java -version
       - mkdir -p /drone/gradle
       - du -sh /drone/gradle
-      - ls -al /cache/martinq108
+      - find /cache/martinq108
     volumes:
       - /tmp/cache:/cache
 
