@@ -19,6 +19,11 @@ pipeline:
       - env
       - du -sh /workspace/gradle
       - java -version
+    secrets: 
+      - signing_keyid
+      - signing_password
+      - SIGNING_KEYID
+      - SIGNING_PASSWORD
 
   build:
     image: martinq/gradle
@@ -28,6 +33,11 @@ pipeline:
       - env
       - du -sh /workspace/gradle
       - ./gradlew assemble
+    secrets: 
+      - signing_keyid
+      - signing_password
+      - SIGNING_KEYID
+      - SIGNING_PASSWORD
 
   rebuild_cache:
     image: drillster/drone-volume-cache
