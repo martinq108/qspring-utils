@@ -14,8 +14,7 @@ pipeline:
   initialize:
     image: martinq/gradle
     commands:
-      - pwd
-      - ls -al ..
+      - du -sh /workspace/gradle
       - java -version
 
   build:
@@ -23,9 +22,8 @@ pipeline:
     environment:
       - GRADLE_USER_HOME=/workspace/gradle
     commands:
-      - pwd
-      - ls -al ..
-      - ./gradlew dependencies -s
+      - du -sh /workspace/gradle
+      - ./gradlew assemble
 
   rebuild_cache:
     image: drillster/drone-volume-cache
