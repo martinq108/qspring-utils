@@ -1,4 +1,12 @@
 pipeline:
+  restore_cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ~/.gradle
+    volumes:
+      - /tmp/cache:/cache
+
   initialize:
     image: martinq/gradle
     commands:
@@ -8,3 +16,11 @@ pipeline:
     image: martinq/gradle
     commands:
       - ./gradlew dependencies -s
+
+  rebuild_cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ~/.gradle
+    volumes:
+      - /tmp/cache:/cache
