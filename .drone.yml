@@ -18,7 +18,7 @@ pipeline:
       - java -version
       - mkdir -p /drone/gradle
       - du -sh /drone/gradle
-      - ls -al /cache
+      - tree /cache
     volumes:
       - /tmp/cache:/cache
 
