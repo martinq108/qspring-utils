@@ -10,7 +10,7 @@ pipeline:
       - /drone/gradle
       - /drone/qspring-utils/build
     volumes:
-      - /tmp/cache:/cache
+      - /tmp/drone-cache:/cache
 
   before_build:
     image: martinq/gradle
@@ -18,9 +18,6 @@ pipeline:
       - java -version
       - mkdir -p /drone/gradle
       - du -sh /drone/gradle
-      - find /cache/martinq108
-    volumes:
-      - /tmp/cache:/cache
 
   build:
     image: martinq/gradle
@@ -50,4 +47,4 @@ pipeline:
       - /drone/gradle
       - /drone/qspring-utils/build
     volumes:
-      - /tmp/cache:/cache
+      - /tmp/drone-cache:/cache
