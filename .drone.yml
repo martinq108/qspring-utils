@@ -18,7 +18,9 @@ pipeline:
       - java -version
       - mkdir -p /drone/gradle
       - du -sh /drone/gradle
-      - env
+      - ls -al /cache
+    volumes:
+      - /tmp/cache:/cache
 
   build:
     image: martinq/gradle
