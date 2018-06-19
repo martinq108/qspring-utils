@@ -3,8 +3,12 @@ pipeline {
   stages {
     stage('aaa') {
       steps {
-        withCredentials([string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')]) {
+        withCredentials([
+            string(credentialsId: 'SIGNING_USERID', variable: 'SIGNING_USERID')
+            string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
+            ]) {
           sh '''
+            echo "SIGNING_USERID=$SIGNING_USERID"
             echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
           '''
         }
@@ -21,7 +25,12 @@ pipeline {
     }
     stage('build') {
       steps {
-        sh './gradlew build'
+        withCredentials([
+            string(credentialsId: 'SIGNING_USERID', variable: 'SIGNING_USERID')
+            string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
+            ]) {
+          sh './gradlew build'
+        }
       }
     }
   }
