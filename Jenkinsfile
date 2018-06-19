@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    docker 'making/alpine-java-bash-git'
+  }
 
   stages {
     stage('aaa') {
@@ -30,12 +32,12 @@ pipeline {
       }
     }
     stage('Build in Docker') {
-      agent {
-        docker {
-          image 'making/alpine-java-bash-git'
-          reuseNode true
-        }
-      }
+//      agent {
+//        docker {
+//          image 'making/alpine-java-bash-git'
+//          reuseNode true
+//        }
+//      }
       steps {
         sh 'pwd'
         sh 'ls -al .'
