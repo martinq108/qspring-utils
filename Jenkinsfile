@@ -20,12 +20,11 @@ pipeline {
       }
     }
     stage('build') {
-      withCredentials([
+      steps {
+        withCredentials([
           string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
           string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
           ]) {
-
-        steps {
           sh './gradlew build'
         }
       }
