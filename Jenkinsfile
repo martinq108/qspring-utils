@@ -1,5 +1,6 @@
 pipeline {
   agent {
+    label 'master'
     docker 'making/alpine-java-bash-git'
   }
 
