@@ -22,11 +22,24 @@ pipeline {
     stage('build') {
       steps {
         withCredentials([
-          string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
-          string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
+            string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
+            string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
           ]) {
           sh './gradlew build'
         }
+      }
+    }
+    stage('Build in Docker') {
+      agent {
+        docker {
+          image 'making/alpine-java-bash-git'
+          reuseNode true
+        }
+      }
+      steps {
+        sh 'pwd'
+        sh 'ls -al .'
+        sh './gradlew build'
       }
     }
   }
