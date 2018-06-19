@@ -3,11 +3,7 @@ pipeline {
   stages {
     stage('aaa') {
       steps {
-        withCredentials([
-            string(credentialsId: 'SIGNING_USEDID', variable: 'SIGNING_USEDID'),
-            string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
-            ]) {
-          sh echo "SIGNING_USEDID=$SIGNING_USEDID"
+        withCredentials([string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')]) {
           sh echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
         }
       }
