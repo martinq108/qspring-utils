@@ -1,12 +1,11 @@
 pipeline {
   agent any
 
-  withCredentials([
-    string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
-    string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
-    ]) {
-
-    stages {
+  stages {
+    withCredentials([
+      string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
+      string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
+      ]) {
       stage('aaa') {
         steps {
           sh '''
