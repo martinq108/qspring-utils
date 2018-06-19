@@ -4,7 +4,9 @@ pipeline {
     stage('aaa') {
       steps {
         withCredentials([string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')]) {
-          sh echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
+          sh '''
+            echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
+          '''
         }
       }
     }
