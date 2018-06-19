@@ -7,8 +7,8 @@ pipeline {
           string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
       ]) {
         steps {
-          sh echo SIGNING_USEDID=$SIGNING_USEDID
-          sh echo SIGNING_PASSWORD=$SIGNING_PASSWORD
+          sh echo "SIGNING_USEDID=$SIGNING_USEDID"
+          sh echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
         }
       }
     }
