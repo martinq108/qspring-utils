@@ -44,17 +44,17 @@ pipeline {
         }
       }
     }
-    stage('Build in Docker') {
-      agent {
-        docker {
-          image 'openjdk:8-jdk-alpine'
-          reuseNode true
-        }
-      }
-      steps {
-        sh 'pwd'
-        sh 'ls -al .'
-      }
-    }
+//    stage('Build in Docker') {
+//      agent {
+//        docker {
+//          image 'openjdk:8-jdk-alpine'
+//          reuseNode true
+//        }
+//      }
+//      steps {
+//        sh 'pwd'
+//        sh 'ls -al .'
+//      }
+//    }
   }
 }
