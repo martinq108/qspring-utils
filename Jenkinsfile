@@ -36,7 +36,11 @@ pipeline {
             string(credentialsId: 'SIGNING_KEYID', variable: 'SIGNING_KEYID'),
             string(credentialsId: 'SIGNING_PASSWORD', variable: 'SIGNING_PASSWORD')
           ]) {
-          sh './gradlew build'
+          sh '''
+            echo "SIGNING_USERID=$SIGNING_KEYID"
+            echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
+            ./gradlew build'
+          '''
         }
       }
     }
