@@ -1,7 +1,9 @@
 pipeline {
   agent {
-    label 'master'
-    docker 'making/alpine-java-bash-git'
+    docker {
+//      image 'making/alpine-java-bash-git'
+      image 'openjdk:8-jdk-alpine'
+    }
   }
 
   stages {
