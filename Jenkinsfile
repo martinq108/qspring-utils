@@ -39,7 +39,7 @@ pipeline {
           sh '''
             echo "SIGNING_USERID=$SIGNING_KEYID"
             echo "SIGNING_PASSWORD=$SIGNING_PASSWORD"
-            ./gradlew build'
+            ./gradlew build
           '''
         }
       }
