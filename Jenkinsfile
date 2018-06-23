@@ -1,10 +1,14 @@
 pipeline {
   agent {
     docker {
-//      image 'making/alpine-java-bash-git'
       image 'openjdk:8-jdk-alpine'
-      args '-v /root/.gradle:/root/.gradle'
+//      image 'making/alpine-java-bash-git'
+//      args '-v /root/.gradle:/root/.gradle'
     }
+  }
+
+  environment {
+    GRADLE_USER_HOME = '/var/jenkins_home/.gradle'
   }
 
   stages {
