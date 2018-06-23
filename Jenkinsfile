@@ -45,16 +45,15 @@ pipeline {
       }
     }
     stage('Build in Docker') {
-//      agent {
-//        docker {
-//          image 'making/alpine-java-bash-git'
-//          reuseNode true
-//        }
-//      }
+      agent {
+        docker {
+          image 'openjdk:8-jdk-alpine'
+          reuseNode true
+        }
+      }
       steps {
         sh 'pwd'
         sh 'ls -al .'
-        sh './gradlew build'
       }
     }
   }
