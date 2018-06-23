@@ -3,6 +3,7 @@ pipeline {
     docker {
 //      image 'making/alpine-java-bash-git'
       image 'openjdk:8-jdk-alpine'
+      args '-v /root/.gradle:/root/.gradle'
     }
   }
 
