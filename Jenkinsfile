@@ -1,7 +1,8 @@
 pipeline {
   agent {
     docker {
-      image 'openjdk:8-jdk-alpine'
+      image 'martinq/openjdk8-git'
+//      image 'openjdk:8-jdk-alpine'
 //      image 'making/alpine-java-bash-git'
 //      args '-v /root/.gradle:/root/.gradle'
     }
