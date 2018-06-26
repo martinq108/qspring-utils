@@ -1,7 +1,11 @@
 pipeline {
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+  }
   agent {
     docker {
-      image 'martinq/openjdk8-git'
+      image 'martinq/openjdk-bash-git'
 //      image 'openjdk:8-jdk-alpine'
 //      image 'making/alpine-java-bash-git'
 //      args '-v /root/.gradle:/root/.gradle'
